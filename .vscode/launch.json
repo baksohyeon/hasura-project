@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug Local",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["start:debug", "--inspect-brk"],
+      "runtimeArgs": ["start:dev", "--inspect-brk"],
       "autoAttachChildProcesses": true,
       "restart": true,
       "sourceMaps": true,
