@@ -13,7 +13,8 @@ export class HouseService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} house`;
+    // return `This action returns a #${id} house`;
+    return { exampleField: id };
   }
 
   update(id: number, updateHouseInput: UpdateHouseInput) {
