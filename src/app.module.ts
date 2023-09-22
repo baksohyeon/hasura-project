@@ -8,7 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { HasuraModule } from '@golevelup/nestjs-hasura';
 import { UserService } from './user/user.service';
-import path from 'path';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import path from 'path';
       },
       managedMetaDataConfig: {
         metadataVersion: 'v3',
-        dirPath: path.join(process.cwd(), 'hasura/metadata'),
+        dirPath: join(process.cwd(), 'hasura/metadata'),
         secretHeaderEnvName: 'HASURA_NESTJS_WEBHOOK_SECRET_HEADER_VALUE',
         nestEndpointEnvName: 'NESTJS_EVENT_WEBHOOK_ENDPOINT',
         defaultEventRetryConfig: {
