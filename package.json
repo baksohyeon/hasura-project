@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.9.3",
+    "@golevelup/nestjs-hasura": "^3.0.4",
     "@nestjs/apollo": "^12.0.9",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
