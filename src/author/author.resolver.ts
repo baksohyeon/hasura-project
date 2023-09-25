@@ -4,27 +4,32 @@ import { Author } from './entities/author.entity';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
 
-@Resolver(() => Author)
+// @Resolver(() => Author)
+@Resolver((of) => Author)
 export class AuthorResolver {
   constructor(private readonly authorService: AuthorService) {}
 
   @Mutation(() => Author)
-  createAuthor(@Args('createAuthorInput') createAuthorInput: CreateAuthorInput) {
+  createAuthor(
+    @Args('createAuthorInput') createAuthorInput: CreateAuthorInput,
+  ) {
     return this.authorService.create(createAuthorInput);
   }
 
-  @Query(() => [Author], { name: 'author' })
+  @Query((type) => [Author], { name: 'author' })
   findAll() {
     return this.authorService.findAll();
   }
 
-  @Query(() => Author, { name: 'author' })
+  @Query(() => Author, { name: 'findOne' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.authorService.findOne(id);
   }
 
   @Mutation(() => Author)
-  updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput) {
+  updateAuthor(
+    @Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput,
+  ) {
     return this.authorService.update(updateAuthorInput.id, updateAuthorInput);
   }
 
