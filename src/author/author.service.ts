@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,25 +17,45 @@ export class AuthorService {
     return this.authorRepository.save(newAuthor);
   }
 
-  findAll() {
+  async findAll() {
     return this.authorRepository.find();
   }
 
-  findOne(id: number) {
-    return this.authorRepository.findOne({
+  async findOne(id: number) {
+    const author = await this.authorRepository.findOne({
       where: {
         id,
       },
     });
+
+    if (!author) {
+      throw new NotFoundException('해당하는 유저가 없습니다.');
+    }
+
+    return author;
   }
 
-  update(id: number, updateAuthorInput: UpdateAuthorInput) {
-    return `This action updates a #${id} author`;
+  async update(id: number, updateAuthorInput: UpdateAuthorInput) {
+    console.log(`This action updates a #${id} author`);
+
+    const author = await this.authorRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!author) {
+      throw new NotFoundException('해당하는 유저가 없습니다.');
+    }
+
+    return this.authorRepository.save({ ...author, ...updateAuthorInput });
   }
 
   async remove(id: number) {
     const result = await this.authorRepository.delete({ id });
-    console.log(`This action removes a #${id} author`);
-    return { result };
+
+    console.log(`This action removes a #${id} author`, result);
+
+    return true;
   }
 }
