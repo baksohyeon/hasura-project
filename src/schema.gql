@@ -8,6 +8,12 @@ type Author {
   firstName: String!
 }
 
+type DeleteAuthorOutput {
+  status: Boolean!
+  description: String!
+  affectedRow: Int!
+}
+
 type Query {
   findAll: [Author!]!
   findOne(id: Int!): Author!
@@ -16,7 +22,7 @@ type Query {
 type Mutation {
   createAuthor(createAuthorInput: CreateAuthorInput!): Author!
   updateAuthor(id: Int!, updateAuthorInput: UpdateAuthorInput!): Author!
-  removeAuthor(id: Int!): Boolean!
+  removeAuthor(id: Int!): DeleteAuthorOutput!
 }
 
 input CreateAuthorInput {

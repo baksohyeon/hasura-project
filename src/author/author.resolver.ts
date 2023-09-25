@@ -3,6 +3,7 @@ import { AuthorService } from './author.service';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
 import { Author } from 'src/common/entity/author.entity';
+import { DeleteAuthorOutput } from 'src/author/dto/update-author.output';
 
 @Resolver(() => Author)
 export class AuthorResolver {
@@ -33,7 +34,7 @@ export class AuthorResolver {
     return this.authorService.update(id, updateAuthorInput);
   }
 
-  @Mutation(() => Boolean, { name: 'removeAuthor' })
+  @Mutation(() => DeleteAuthorOutput, { name: 'removeAuthor' })
   removeAuthor(@Args('id', { type: () => Int }) id: number) {
     return this.authorService.remove(id);
   }

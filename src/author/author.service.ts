@@ -4,6 +4,7 @@ import { UpdateAuthorInput } from './dto/update-author.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from 'src/common/entity/author.entity';
 import { Repository } from 'typeorm';
+import { DeleteAuthorOutput } from 'src/author/dto/update-author.output';
 
 @Injectable()
 export class AuthorService {
@@ -51,11 +52,13 @@ export class AuthorService {
     return this.authorRepository.save({ ...author, ...updateAuthorInput });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<DeleteAuthorOutput> {
     const result = await this.authorRepository.delete({ id });
 
-    console.log(`This action removes a #${id} author`, result);
-
-    return true;
+    return {
+      status: true,
+      description: `This action removes a #${id} author`,
+      affectedRow: result.affected,
+    };
   }
 }
