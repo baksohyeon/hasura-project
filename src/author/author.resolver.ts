@@ -1,22 +1,23 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AuthorService } from './author.service';
-import { Author } from './entities/author.entity';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
+import { Author } from 'src/common/entity/author.entity';
+// import { Author } from 'src/common/entity/author.entity';
 
 // @Resolver(() => Author)
-@Resolver((of) => Author)
+@Resolver(() => Author)
 export class AuthorResolver {
   constructor(private readonly authorService: AuthorService) {}
 
-  @Mutation(() => Author)
-  createAuthor(
+  @Mutation((returns) => Author)
+  async createAuthor(
     @Args('createAuthorInput') createAuthorInput: CreateAuthorInput,
-  ) {
-    return this.authorService.create(createAuthorInput);
+  ): Promise<Author> {
+    return await this.authorService.create(createAuthorInput);
   }
 
-  @Query((type) => [Author], { name: 'author' })
+  @Query((type) => [Author])
   findAll() {
     return this.authorService.findAll();
   }

@@ -1,0 +1,41 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Author {
+  id: Int!
+  lastName: String!
+  firstName: String!
+}
+
+type Query {
+  findAll: [Author!]!
+  findOne(id: Int!): Author!
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput!): Author!
+  updateAuthor(updateAuthorInput: UpdateAuthorInput!): Author!
+  removeAuthor(id: Int!): Author!
+}
+
+input CreateAuthorInput {
+  """author id"""
+  id: Int!
+
+  """last name"""
+  lastName: String!
+
+  """first name"""
+  firstName: String!
+}
+
+input UpdateAuthorInput {
+  id: Int!
+
+  """last name"""
+  lastName: String
+
+  """first name"""
+  firstName: String
+}

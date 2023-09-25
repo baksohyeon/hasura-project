@@ -10,18 +10,7 @@ export default () => ({
     charset: process.env.DB_CHARSET,
     timezone: process.env.DB_TIMEZONE,
     syncronize: process.env.DB_SYNCHRONIZE,
+    database: process.env.DB_NAME,
     entities: [__dirname + '/../common/entity/*.entity{.ts,.js}'],
   },
 });
-
-export interface DatabaseConfig {
-  type: 'mysql';
-  host: string;
-  port: number;
-  name: string;
-  password: string;
-  charset: string;
-  timezone: string;
-  syncronize: boolean;
-  entities: string[];
-}

@@ -1,39 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
-import { Author } from 'src/author/entities/author.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Author } from 'src/common/entity/author.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthorService {
-  create(createAuthorInput: CreateAuthorInput) {
-    return { ...createAuthorInput };
+  constructor(
+    @InjectRepository(Author)
+    private readonly authorRepository: Repository<Author>,
+  ) {}
+
+  async create(createAuthorInput: CreateAuthorInput) {
+    const newAuthor = this.authorRepository.create(createAuthorInput);
+    return this.authorRepository.save(newAuthor);
   }
 
   findAll() {
-    // return `This action returns all author`;
-    return [
-      {
-        id: 1,
-        lastName: 'last',
-        firstName: 'first',
-      },
-      {
-        id: 2,
-        lastName: 'last2',
-        firstName: 'first2',
-      },
-    ] as Author[];
+    return this.authorRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} author`;
+    return this.authorRepository.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateAuthorInput: UpdateAuthorInput) {
     return `This action updates a #${id} author`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} author`;
+  async remove(id: number) {
+    const result = await this.authorRepository.delete({ id });
+    console.log(`This action removes a #${id} author`);
+    return { result };
   }
 }
