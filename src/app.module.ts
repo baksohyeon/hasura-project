@@ -30,7 +30,7 @@ import { join } from 'path';
       },
       managedMetaDataConfig: {
         metadataVersion: 'v3',
-        dirPath: join(process.cwd(), 'hasura/metadata'),
+        dirPath: join(process.cwd(), '/metadata'),
         secretHeaderEnvName: 'HASURA_NESTJS_WEBHOOK_SECRET_HEADER_VALUE',
         nestEndpointEnvName: 'NESTJS_EVENT_WEBHOOK_ENDPOINT',
         defaultEventRetryConfig: {

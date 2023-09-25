@@ -1,0 +1,31 @@
+table:
+  name: users
+  schema: public
+event_triggers:
+  - name: user-created
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      num_retries: 3
+      interval_sec: 15
+      timeout_sec: 100
+    webhook_from_env: NESTJS_EVENT_WEBHOOK_ENDPOINT
+    headers:
+      - name: secret-header
+        value_from_env: HASURA_NESTJS_WEBHOOK_SECRET_HEADER_VALUE
+  - name: user-updated
+    definition:
+      enable_manual: false
+      update:
+        columns:
+          - email
+    retry_conf:
+      num_retries: 3
+      interval_sec: 15
+      timeout_sec: 100
+    webhook_from_env: NESTJS_EVENT_WEBHOOK_ENDPOINT
+    headers:
+      - name: secret-header
+        value_from_env: HASURA_NESTJS_WEBHOOK_SECRET_HEADER_VALUE
